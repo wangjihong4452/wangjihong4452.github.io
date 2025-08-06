@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D坦克网址导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                        url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin: 40px 0 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff8a00, #ff2070, #00c9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .link-card {
+            background: rgba(30, 30, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #ff2070);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 32, 112, 0.2);
+            background: rgba(40, 40, 60, 0.85);
+        }
+        
+        .link-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .link-card h3 i {
+            margin-right: 12px;
+            color: #ff8a00;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .link-card .desc {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .link-card .url {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .link-card .url i {
+            margin-right: 10px;
+            color: #00c9ff;
+        }
+        
+        .link-card .url a {
+            color: #00c9ff;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .link-card .url a:hover {
+            text-decoration: underline;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff2070, #ff8a00);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 800px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .copyright {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .copyright a {
+            color: #00c9ff;
+            text-decoration: none;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .link-card {
+                padding: 20px;
+            }
+            
+            .link-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-rocket"></i> 3D坦克导航</h1>
+        <p>一站式访问3D坦克相关资源库</p>
+    </div>
+    
+    <div class="grid-container">
+        <!-- wiki -->
+        <div class="link-card">
+            <h3><i class="fas fa-book"></i> Wiki</h3>
+            <p class="desc">全面了解游戏机制、装备、地图和战术策略</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://en.tankiwiki.com/" target="_blank">https://en.tankiwiki.com/</a>
+            </div>
+        </div>
+        
+        <!-- 周报视频 -->
+        <div class="link-card">
+            <h3><i class="fas fa-video"></i> 周报视频</h3>
+            <p class="desc">每周精选游戏视频，了解最新动态和精彩瞬间</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://space.bilibili.com/1670766752/lists/245461?type=series" target="_blank">bilibili.com/1670766752 周报视频</a>
+            </div>
+            <span class="tag">Bilibili</span>
+        </div>
+        
+        <!-- 官网 -->
+        <div class="link-card">
+            <h3><i class="fas fa-globe"></i> 官网</h3>
+            <p class="desc">星际坦克官方网站，获取最新游戏资讯和更新</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://tankionline.com/en/" target="_blank">https://tankionline.com/en/</a>
+            </div>
+        </div>
+        
+        <!-- 外服星际挑战排行榜 -->
+        <div class="link-card">
+            <h3><i class="fas fa-trophy"></i> 外服星际挑战排行榜</h3>
+            <p class="desc">查看外服玩家在星际挑战中的排名表现</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://pages.tankionline.com/challenge-accepted?lang=en" target="_blank">pages.tankionline.com/challenge-accepted</a>
+            </div>
+            <span class="tag">排行榜</span>
+        </div>
+        
+        <!-- testanki排行榜 -->
+        <div class="link-card">
+            <h3><i class="fas fa-star"></i> testanki排行榜</h3>
+            <p class="desc">由B站大佬testanki制作的玩家排行榜</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://testanki1.github.io/ratings" target="_blank">testanki1.github.io/ratings</a>
+            </div>
+            <span class="tag">玩家制作</span>
+        </div>
+        
+        <!-- 外服字母表辅助 -->
+        <div class="link-card">
+            <h3><i class="fas fa-keyboard"></i> 外服字母表游戏辅助</h3>
+            <p class="desc">testanki制作的外服字母表游戏辅助工具</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://testanki1.github.io/alphabet/" target="_blank">testanki1.github.io/alphabet/</a>
+            </div>
+            <span class="tag">工具</span>
+        </div>
+        
+        <!-- 装备改造图片拼接器 -->
+        <div class="link-card">
+            <h3><i class="fas fa-puzzle-piece"></i> 装备改造图片拼接器</h3>
+            <p class="desc">testanki制作的装备改造图片拼接工具</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://testanki1.github.io/augments_icon/custom_splicer" target="_blank">testanki1.github.io/augments_icon/custom_splicer</a>
+            </div>
+            <span class="tag">实用工具</span>
+        </div>
+        
+        <!-- 多合一客户端 -->
+        <div class="link-card">
+            <h3><i class="fas fa-box"></i> 多合一客户端</h3>
+            <p class="desc">testanki制作的多合一游戏客户端</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://www.123pan.com/s/cbiA-hjafd" target="_blank">123pan.com/s/cbiA-hjafd</a>
+            </div>
+            <span class="tag">客户端</span>
+        </div>
+        
+        <!-- 怀旧服网址 -->
+        <div class="link-card">
+            <h3><i class="fas fa-history"></i> 怀旧服网址</h3>
+            <p class="desc">访问星际坦克怀旧服官方网站</p>
+            <div class="url">
+                <i class="fas fa-link"></i>
+                <a href="https://pro-tanki.com/en" target="_blank">https://pro-tanki.com/en</a>
+            </div>
+            <span class="tag">怀旧版</span>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>3D坦克网址导航 - 为游戏玩家提供便捷的资源访问</p>
+        <div class="copyright">
+            <a href="#"><i class="fas fa-user"></i>返回顶部</a>
+        </div>
+    </div>
+    
+    <script>
+        // 添加卡片悬停效果
+        document.querySelectorAll('.link-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // 添加随机阴影效果
+        setInterval(() => {
+            const cards = document.querySelectorAll('.link-card');
+            cards.forEach(card => {
+                const hue = Math.floor(Math.random() * 360);
+                card.style.boxShadow = `0 15px 35px hsla(${hue}, 100%, 50%, 0.15)`;
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
