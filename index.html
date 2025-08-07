@@ -183,6 +183,28 @@
             text-decoration: underline;
         }
         
+        /* 新增访问计数器样式 */
+        .visit-counter {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: rgba(30, 30, 40, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .visit-counter i {
+            margin-right: 8px;
+            color: #00c9ff;
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
@@ -194,6 +216,11 @@
             
             .grid-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .visit-counter {
+                font-size: 0.8rem;
+                padding: 8px 12px;
             }
         }
         
@@ -208,6 +235,11 @@
             
             .link-card h3 {
                 font-size: 1.3rem;
+            }
+            
+            .visit-counter {
+                right: 10px;
+                bottom: 10px;
             }
         }
     </style>
@@ -324,6 +356,12 @@
         </div>
     </div>
     
+    <!-- 新增访问计数器 -->
+    <div class="visit-counter">
+        <i class="fas fa-eye"></i>
+        <span id="visitCount">正在加载访问次数...</span>
+    </div>
+    
     <script>
         // 添加卡片悬停效果
         document.querySelectorAll('.link-card').forEach(card => {
@@ -344,6 +382,20 @@
                 card.style.boxShadow = `0 15px 35px hsla(${hue}, 100%, 50%, 0.15)`;
             });
         }, 5000);
+        
+        // ===== 新增：使用 CountAPI 统计访问次数（适用于 GitHub Pages）=====
+        document.addEventListener('DOMContentLoaded', function() {
+            // 使用 CountAPI（免费服务）
+            fetch('https://api.countapi.xyz/hit/3dtank-navigation/visits')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visitCount').textContent = `总访问量: ${data.value}`;
+                })
+                .catch(error => {
+                    console.error('访问统计失败:', error);
+                    document.getElementById('visitCount').textContent = '统计加载失败';
+                });
+        });
     </script>
 </body>
 </html>
