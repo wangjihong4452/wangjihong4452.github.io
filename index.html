@@ -183,7 +183,7 @@
             text-decoration: underline;
         }
         
-        /* 新增访问计数器样式 */
+        /* 访问计数器样式 */
         .visit-counter {
             position: fixed;
             right: 20px;
@@ -356,44 +356,42 @@
         </div>
     </div>
     
-    <!-- 新增访问计数器 -->
+    <!-- 访问计数器 -->
     <div class="visit-counter">
         <i class="fas fa-eye"></i>
-        <span id="visitCount">正在加载访问次数...</span>
+        <span id="visitCount">加载中...</span>
     </div>
     
     <script>
-        // 添加卡片悬停效果
+        // 卡片悬停效果
         document.querySelectorAll('.link-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
+            card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-10px)');
+            card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
         });
-        
-        // 添加随机阴影效果
+
+        // 随机阴影效果
         setInterval(() => {
-            const cards = document.querySelectorAll('.link-card');
-            cards.forEach(card => {
-                const hue = Math.floor(Math.random() * 360);
-                card.style.boxShadow = `0 15px 35px hsla(${hue}, 100%, 50%, 0.15)`;
+            document.querySelectorAll('.link-card').forEach(card => {
+                card.style.boxShadow = `0 15px 35px hsla(${Math.random() * 360}, 100%, 50%, 0.15)`;
             });
         }, 5000);
-        
-        // ===== 新增：使用 CountAPI 统计访问次数（适用于 GitHub Pages）=====
+
+        // 访问统计（CountAPI + localStorage 降级）
         document.addEventListener('DOMContentLoaded', function() {
-            // 使用 CountAPI（免费服务）
+            const counterElement = document.getElementById('visitCount');
+            
+            // 优先尝试 CountAPI
             fetch('https://api.countapi.xyz/hit/3dtank-navigation/visits')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('visitCount').textContent = `总访问量: ${data.value}`;
+                    counterElement.textContent = `总访问量: ${data.value}`;
                 })
-                .catch(error => {
-                    console.error('访问统计失败:', error);
-                    document.getElementById('visitCount').textContent = '统计加载失败';
+                .catch(() => {
+                    // 失败后改用 localStorage
+                    let localCount = localStorage.getItem('localVisitCount') || 0;
+                    localCount++;
+                    localStorage.setItem('localVisitCount', localCount);
+                    counterElement.textContent = `访问量: ${localCount} (本地)`;
                 });
         });
     </script>
