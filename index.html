@@ -5,8 +5,6 @@
   <title>ly云手机</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2576884527497195"
-     crossorigin="anonymous"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -18,28 +16,9 @@
     body {
       font-family: var(--font-main);
       color: var(--color-text);
-      height: 100vh;
-      overflow: hidden;
       background: #000;
-      background-attachment: fixed;
-    }
-    .page-container { height: 100%; position: relative; }
-    .section {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      justify-content: flex-start; align-items: center;
-      padding: 40px 16px 30px;
-      overflow-y: auto;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.8s ease, visibility 0.8s;
-      background: #000;
-    }
-    .section.active { opacity: 1; visibility: visible; }
-    
-    .content {
-      width: 100%;
-      max-width: 420px;
-      margin-top: 10px;
+      min-height: 100vh;
+      padding: 20px 16px;
     }
 
     .brand-title {
@@ -47,738 +26,182 @@
       font-weight: 700;
       color: var(--color-accent);
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       letter-spacing: 2px;
+    }
+
+    .section-block {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .block-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      letter-spacing: 1px;
+    }
+
+    .block-content {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--color-text);
+    }
+
+    .block-content a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    .block-content a:hover {
+      text-decoration: underline;
     }
 
     .notice {
       background: rgba(255,255,255,0.03);
       border-left: 2px solid var(--color-accent);
-      padding: 14px 16px; font-size: 0.95rem; line-height: 1.6;
-      opacity: 0.9;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
     }
-    .notice ol { margin: 10px 0 0 1.2em; }
-    .notice li { margin-bottom: 6px; }
+
+    .notice ol {
+      margin: 10px 0 0 1.2em;
+    }
+
+    .notice li {
+      margin-bottom: 6px;
+    }
 
     .button-link {
-      display: inline-block; margin-top: 20px;
-      padding: 12px 28px;
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 24px;
       background: linear-gradient(135deg, #d8d8d8, #3a3a3a);
-      color: #000; text-decoration: none; border-radius: 2px;
-      font-size: 0.9rem; font-weight: 500;
+      color: #000;
+      text-decoration: none;
+      border-radius: 2px;
+      font-size: 0.88rem;
+      font-weight: 500;
       letter-spacing: 1px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.4);
       transition: all 0.3s ease;
     }
+
     .button-link:hover {
       background: linear-gradient(135deg, #fff, #d8d8d8);
       box-shadow: 0 4px 10px rgba(192,178,131,0.3);
-      transform: translateY(-1px);
     }
 
     .wave-underline {
-      display: block; width: 100%; height: 4px; margin-top: 10px;
-    }
-    .wave-underline svg {
-      width: 100%; height: 100%; display: block;
-    }
-
-    .metal-btn {
-      display: inline-flex; justify-content: center; align-items: center;
-      width: 38px; height: 38px;
-      background: linear-gradient(145deg, #3a3a3a, #1a1a1a);
-      color: var(--color-text); text-decoration: none; border-radius: 50%;
-      font-size: 0.75rem; font-weight: 500;
-      border: 1px solid #444;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-      transition: all 0.3s ease; margin: 4px; cursor: pointer;
-    }
-    .metal-btn:hover {
-      background: linear-gradient(145deg, #4a4a4a, #222);
-      border-color: var(--color-accent);
-      transform: translateY(-2px);
-    }
-
-    .compact-nav {
-      display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;
-    }
-    .nav-group {
-      display: flex; flex-direction: column; align-items: center;
-      width: calc(25% - 10px);
-    }
-    .nav-label {
-      font-size: 0.72rem; font-weight: 500; color: var(--color-meta);
-      margin-bottom: 6px; text-align: center;
-      letter-spacing: 1px;
-    }
-    .nav-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-
-    .func-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px; padding: 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .func-card-title {
-      font-size: 0.95rem; font-weight: 500;
-      margin-bottom: 8px; color: var(--color-text);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 6px;
-      letter-spacing: 1px;
-    }
-    .func-card-content { font-size: 0.88rem; }
-
-    .calc input {
-      width: 100%; padding: 10px; margin-bottom: 10px;
-      font-size: 1rem; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
-      color: var(--color-text);
-    }
-    .calc .buttons { display: flex; gap: 10px; margin-bottom: 10px; }
-    .calc button {
-      flex: 1; padding: 10px; font-size: 1.1rem;
-      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
-    }
-    .calc p { text-align: center; font-size: 1rem; }
-
-    .countdown-input { display: flex; gap: 8px; margin-bottom: 8px; }
-    .countdown-input input {
-      flex: 1; padding: 8px; font-size: 0.9rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
-      color: var(--color-text);
-    }
-    .countdown-display {
-      text-align: center; font-size: 1.1rem; font-weight: 500;
-    }
-
-    .note-input {
-      width: 100%; height: 60px; padding: 8px;
-      font-size: 0.9rem; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
-      color: var(--color-text); resize: none;
-    }
-    .note-save {
-      margin-top: 8px; padding: 6px 12px; font-size: 0.88rem;
-      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
-    }
-    .note-content {
-      margin-top: 8px; font-size: 0.88rem; white-space: pre-wrap;
-    }
-
-    .reserved-widget {
-      text-align: center; color: var(--color-meta); font-size: 0.88rem;
-    }
-
-    .clock-weather {
-      display: flex; flex-direction: row; gap: 10px;
-    }
-    .clock-weather > div {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-    }
-    .clock-weather .small-title {
-      font-size: 0.75rem; color: var(--color-meta); margin-bottom: 4px;
-    }
-    #clock { font-size: 1.2rem; font-weight: 500; }
-    .weather-display {
-      font-size: 0.88rem; text-align: center;
-    }
-
-    .schedule-list-wrapper {
-      max-height: 160px; overflow-y: auto; padding-right: 4px;
-    }
-    .schedule-list { list-style: none; padding-left: 0; }
-    .schedule-list li {
-      display: flex; flex-direction: column;
-      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.88rem;
-    }
-    .schedule-time {
-      color: var(--color-meta); font-size: 0.76rem;
-      margin-bottom: 4px;
-    }
-    .schedule-text { word-break: break-word; }
-    .schedule-delete {
-      margin-top: 6px; color: #c0392b; background: none; border: none;
-      font-size: 0.82rem; cursor: pointer; text-align: right;
-    }
-
-    .schedule-inputs {
-      display: flex; flex-direction: column; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .schedule-inputs input[type="datetime-local"],
-    .schedule-inputs input[type="text"] {
-      width: 100%; padding: 8px; font-size: 0.85rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
-      color: var(--color-text);
-    }
-    .schedule-add-btn {
-      padding: 8px; font-size: 0.9rem;
-      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
-    }
-
-    .extended-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      display: block;
       width: 100%;
-    }
-    .ext-feature {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px; padding: 10px;
-    }
-    .ext-feature h4 { font-size: 0.9rem; margin-bottom: 6px; }
-    .ext-feature p { font-size: 0.78rem; color: var(--color-meta); }
-    .ext-feature .tool-area {
+      height: 4px;
       margin-top: 10px;
-      padding: 10px;
-      background: rgba(255,255,255,0.02);
-      border-radius: 4px;
-      font-size: 0.82rem;
     }
 
-    .nav-dots {
-      position: fixed; right: 10px; top: 50%;
-      transform: translateY(-50%); display: flex;
-      flex-direction: column; gap: 10px; z-index: 100;
-    }
-    .dot {
-      width: 6px; height: 6px; background: var(--color-meta);
-      opacity: 0.4; border-radius: 50%; cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .dot.active { opacity: 1; transform: scale(1.3); background: var(--color-accent); }
-
-    .legal-content {
-      font-size: 0.9rem;
-      line-height: 1.8;
-    }
-    .legal-content h3 {
-      color: var(--color-accent);
-      margin-top: 24px;
-      margin-bottom: 12px;
-      font-size: 1.1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 6px;
-    }
-    .legal-content h3:first-child {
-      margin-top: 0;
-    }
-    .legal-content p {
-      margin-bottom: 12px;
-      color: var(--color-text);
-    }
-    .legal-content ul {
-      list-style: disc;
-      margin-left: 1.5em;
-      margin-bottom: 12px;
-    }
-    .legal-content li {
-      margin-bottom: 8px;
-    }
-    .back-to-home {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      background: transparent;
-      color: var(--color-accent);
-      border: 1px solid var(--color-accent);
-      border-radius: 2px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-    .back-to-home:hover {
-      background: var(--color-accent);
-      color: #000;
+    .wave-underline svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div class="page-container">
-    <!-- 1. 远程控制精灵说明 -->
-    <div class="section active" id="section1">
-      <div class="content">
-        <div class="brand-title">ly云手机</div>
-        <div class="func-card">
-          <div class="func-card-title">🚀 远程控制精灵指南</div>
-          <div class="func-card-content">
-            <div class="notice">
-              <p>此网页为腾讯文档网页版，用于管理远程控制精灵的设备使用状态。</p>
-              <div class="wave-underline">
-                <svg viewBox="0 0 100 6" preserveAspectRatio="none">
-                  <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
-                </svg>
-              </div>
-              <p>操作说明：</p>
-              <div class="wave-underline">
-                <svg viewBox="0 0 100 6" preserveAspectRatio="none">
-                  <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,1 50,3 T100,3"/>
-                </svg>
-              </div>
-              <ol>
-                <li>在设备屏幕上找到远程控制精灵的二维码</li>
-                <li>使用客户端扫描二维码，将其添加到远程列表</li>
-                <li>在腾讯文档中更新为“正在使用”状态</li>
-              </ol>
-            </div>
-            <a class="button-link" href="https://docs.qq.com/sheet/DYUNMc2ZUbkJac29z?tab=BB08J2" target="_blank">查看 / 更新设备状态</a>
-            <div class="wave-underline">
-              <svg viewBox="0 0 100 6" preserveAspectRatio="none">
-                <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
-              </svg>
-            </div>
-            <a class="button-link" href="https://www.yijieapp.com/" target="_blank">下载远程控制精灵</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="brand-title">ly云手机</div>
 
-    <!-- 2. 网址导航 + 计算器 -->
-    <div class="section" id="section2">
-      <div class="content">
-        <div class="func-card">
-          <div class="func-card-title">🌐 常用网址导航</div>
-          <div class="func-card-content">
-            <div class="compact-nav">
-              <div class="nav-group">
-                <div class="nav-label">微软服务</div>
-                <div class="nav-buttons">
-                  <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows11" target="_blank">11</a>
-                  <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows10" target="_blank">10</a>
-                  <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows8ISO" target="_blank">8.1</a>
-                  <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows8" target="_blank">8</a>
-                  <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows7" target="_blank">7</a>
-                </div>
-              </div>
-              <div class="nav-group">
-                <div class="nav-label">装机必备</div>
-                <div class="nav-buttons">
-                  <a class="metal-btn" href="https://weixin.qq.com/" target="_blank">微</a>
-                  <a class="metal-btn" href="https://im.qq.com/" target="_blank">Q</a>
-                  <a class="metal-btn" href="https://browser.360.cn/se/" target="_blank">360</a>
-                  <a class="metal-btn" href="https://www.yijieapp.com/" target="_blank">精</a>
-                </div>
-              </div>
-              <div class="nav-group">
-                <div class="nav-label">装机专用</div>
-                <div class="nav-buttons">
-                  <a class="metal-btn" href="https://rufus.ie/zh/" target="_blank">Ruf</a>
-                  <a class="metal-btn" href="https://www.diskgenius.cn/" target="_blank">DG</a>
-                  <a class="metal-btn" href="https://www.winntsetup.com/" target="_blank">WNT</a>
-                </div>
-              </div>
-              <div class="nav-group">
-                <div class="nav-label">搜索视频</div>
-                <div class="nav-buttons">
-                  <a class="metal-btn" href="https://www.baidu.com" target="_blank">百</a>
-                  <a class="metal-btn" href="https://www.bilibili.com" target="_blank">B站</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- 1. 云手机控制台 -->
+  <div class="section-block">
+    <div class="block-title">🚀 云手机控制台</div>
+    <div class="block-content">
+      <div class="notice">
+        <p>此网页为腾讯文档网页版，用于管理远程控制精灵的设备使用状态。</p>
         <div class="wave-underline">
           <svg viewBox="0 0 100 6" preserveAspectRatio="none">
             <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
           </svg>
         </div>
-        <div class="func-card">
-          <div class="func-card-title">🧮 简易计算器</div>
-          <div class="func-card-content">
-            <div class="calc">
-              <input type="number" id="num1" placeholder="数字1">
-              <input type="number" id="num2" placeholder="数字2">
-              <div class="buttons">
-                <button onclick="calc('+')">+</button>
-                <button onclick="calc('-')">−</button>
-                <button onclick="calc('*')">×</button>
-                <button onclick="calc('/')">÷</button>
-              </div>
-              <p>结果：<span id="calcResult">-</span></p>
-            </div>
-          </div>
+        <p>操作说明：</p>
+        <div class="wave-underline">
+          <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+            <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,1 50,3 T100,3"/>
+          </svg>
         </div>
+        <ol>
+          <li>在设备屏幕上找到远程控制精灵的二维码</li>
+          <li>使用客户端扫描二维码，将其添加到远程列表</li>
+          <li>在腾讯文档中更新为“正在使用”状态</li>
+        </ol>
       </div>
-    </div>
-
-    <!-- 3. 时钟 + 天气 + 工作清单 -->
-    <div class="section" id="section3">
-      <div class="content">
-        <div class="func-card">
-          <div class="func-card-title">🕒 实时时钟与天气</div>
-          <div class="func-card-content clock-weather">
-            <div>
-              <span class="small-title">时间</span>
-              <div id="clock">--:--:--</div>
-            </div>
-            <div>
-              <span class="small-title">天气</span>
-              <div class="weather-display" id="weatherDisplay">暂无天气数据</div>
-            </div>
-          </div>
-        </div>
-        <div class="func-card">
-          <div class="func-card-title">📝 工作待办清单</div>
-          <div class="func-card-content">
-            <div class="schedule-inputs" id="scheduleInputs">
-              <input type="datetime-local" class="schedule-time-input">
-              <input type="text" class="schedule-text-input" placeholder="任务内容">
-              <button class="schedule-add-btn" onclick="addScheduleFromInputs()">添加</button>
-            </div>
-            <div class="schedule-list-wrapper">
-              <ul class="schedule-list" id="scheduleList"></ul>
-            </div>
-          </div>
-        </div>
+      <a class="button-link" href="https://docs.qq.com/sheet/DYUNMc2ZUbkJac29z?tab=BB08J2" target="_blank">查看 / 更新设备状态</a>
+      <div class="wave-underline">
+        <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+          <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
+        </svg>
       </div>
-    </div>
-
-    <!-- 4. 倒计时 + 笔记 + 预留 -->
-    <div class="section" id="section4">
-      <div class="content">
-        <div class="func-card">
-          <div class="func-card-title">⏳ 目标日期倒计时</div>
-          <div class="func-card-content">
-            <div class="countdown-input">
-              <input type="date" id="targetDate">
-            </div>
-            <div class="countdown-display" id="countdownDisplay">0 天</div>
-          </div>
-        </div>
-        <div class="func-card">
-          <div class="func-card-title">📒 快速记事本</div>
-          <div class="func-card-content">
-            <textarea class="note-input" id="noteInput" placeholder="写点什么..."></textarea>
-            <button class="note-save" onclick="saveNote()">保存</button>
-            <div class="note-content" id="noteContent"></div>
-          </div>
-        </div>
-        <div class="func-card">
-          <div class="func-card-title">🔲 预留功能区</div>
-          <div class="func-card-content reserved-widget">未来扩展</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. 扩展功能区 -->
-    <div class="section" id="section5">
-      <div class="content">
-        <div class="func-card">
-          <div class="func-card-title">🛠️ 扩展工具箱</div>
-          <div class="func-card-content">
-            <div class="extended-grid" id="extendedGrid5">
-              <div class="ext-feature" data-tool="scientific-calc">
-                <h4>🔬 科学计算器</h4>
-                <p>支持三角函数、对数、指数等运算</p>
-                <div class="tool-area" id="sciCalcArea">
-                  <input type="text" id="sciExpr" placeholder="例: sin(30)+log(100)" style="width:100%;padding:6px;margin-bottom:6px;">
-                  <button onclick="runSciCalc()" style="width:100%;padding:6px;">计算</button>
-                  <div id="sciResult" style="margin-top:6px;text-align:center;"></div>
-                </div>
-              </div>
-              <div class="ext-feature" data-tool="eyedropper">
-                <h4>🎨 颜色拾取器</h4>
-                <p>屏幕取色与调色板管理</p>
-                <div class="tool-area" id="eyedropperArea">
-                  <button onclick="startPickColor()" style="width:100%;padding:6px;">取色</button>
-                  <div id="pickedColor" style="margin-top:6px;text-align:center;"></div>
-                </div>
-              </div>
-              <div class="ext-feature" data-tool="tech-tools">
-                <h4>🛠 技术工具集</h4>
-                <p>IP查询、Base64编解码、JSON格式化</p>
-                <div class="tool-area" id="techToolsArea">
-                  <button onclick="showTechToolMenu()" style="width:100%;padding:6px;">打开工具菜单</button>
-                  <div id="techToolOutput" style="margin-top:6px;font-size:0.78rem;"></div>
-                </div>
-              </div>
-              <div class="ext-feature" data-tool="camera-test">
-                <h4>📷 相机测试模式</h4>
-                <p>检测摄像头分辨率与帧率</p>
-                <div class="tool-area" id="cameraArea">
-                  <button onclick="startCameraTest()" style="width:100%;padding:6px;">打开摄像头</button>
-                  <video id="camVideo" autoplay playsinline muted style="width:100%;margin-top:6px;display:none;"></video>
-                  <div id="camInfo" style="margin-top:6px;text-align:center;font-size:0.78rem;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. FAQ 帮助页面 -->
-    <div class="section" id="section6">
-      <div class="content legal-content">
-        <h3>1. 如何使用远程控制精灵？</h3>
-        <p>首先，请在目标设备的屏幕上找到远程控制精灵的二维码。然后，在您的电脑或手机上打开远程控制精灵客户端，扫描该二维码将其添加到远程列表。添加成功后，即可发起远程连接。</p>
-        
-        <h3>2. 计算器功能支持哪些运算？</h3>
-        <p>基础计算器支持加、减、乘、除四则运算。在“扩展功能区”的科学计算器中，您可以执行更复杂的数学运算，如三角函数 (sin, cos)、对数 (log) 和指数等。</p>
-        
-        <h3>3. 工作清单的数据会丢失吗？</h3>
-        <p>不会。您的工作清单数据会保存在浏览器的本地存储 (LocalStorage) 中。只要您不清除浏览器缓存，数据就会一直保留，即使关闭浏览器再重新打开也是如此。</p>
-        
-        <h3>4. 天气功能为什么显示“暂无天气数据”？</h3>
-        <p>当前版本的天气功能是一个占位符，需要接入第三方天气 API 才能显示真实数据。我们计划在未来的更新中完善此功能。</p>
-        
-        <h3>5. 如何反馈问题或建议？</h3>
-        <p>由于这是一个静态网页，暂时没有内置的反馈系统。您可以通过您获得此链接的渠道向我们反馈，我们会认真考虑每一条建议。</p>
-        
-        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
-      </div>
-    </div>
-
-    <!-- 7. 关于我 -->
-    <div class="section" id="section7">
-      <div class="content legal-content">
-        <h3>关于我</h3>
-        <p>欢迎来到 ly云手机 站点。我是本站的创建与维护者，热爱技术、工具分享与效率提升。</p>
-        <p>本网站集合了多种实用小工具，方便日常使用与远程设备管理。我希望通过这个平台，让复杂的操作变得简单，让工具真正服务于人。</p>
-        <p>如果你喜欢这里的内容，欢迎常来看看，也欢迎通过联系方式页面与我交流。</p>
-        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
-      </div>
-    </div>
-
-    <!-- 8. 联系方式 -->
-    <div class="section" id="section8">
-      <div class="content legal-content">
-        <h3>联系方式</h3>
-        <p>您可以通过以下方式联系我：</p>
-        <ul>
-          <li>邮箱：<a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a></li>
-        </ul>
-        <p>无论是建议、合作还是问题反馈，我都会尽快回复。</p>
-        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
-      </div>
-    </div>
-
-    <!-- 9. 隐私政策 (全新原创版本) -->
-    <div class="section" id="section9">
-      <div class="content legal-content">
-        <h3>隐私政策</h3>
-        <p>本网站（ly云手机）尊重并保护您的个人隐私。我们承诺不会收集任何可直接识别您个人身份的信息，除非您主动通过联系方式页面与我们沟通。</p>
-        <p>本网站使用本地存储（LocalStorage）来保存您的待办事项和笔记，这些数据仅存在于您的设备浏览器中，不会被上传至任何服务器。</p>
-        <p>网站可能使用第三方统计服务（如访问量分析），但这些服务不会获取您的个人信息。</p>
-        <p>如您对本隐私政策有任何疑问，请通过 <a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a> 与我们联系。</p>
-        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
-      </div>
+      <a class="button-link" href="https://www.yijieapp.com/" target="_blank">下载远程控制精灵</a>
     </div>
   </div>
 
-  <!-- 右侧导航点容器 -->
-  <div class="nav-dots" id="navDots"></div>
+  <!-- 2. FAQ -->
+  <div class="section-block">
+    <div class="block-title">❓ 常见问题 FAQ</div>
+    <div class="block-content">
+      <h4 style="color: var(--color-accent); margin: 12px 0 6px;">1. 如何使用远程控制精灵？</h4>
+      <p>首先，请在目标设备的屏幕上找到远程控制精灵的二维码。然后，在您的电脑或手机上打开远程控制精灵客户端，扫描该二维码将其添加到远程列表。添加成功后，即可发起远程连接。</p>
+      
+      <h4 style="color: var(--color-accent); margin: 12px 0 6px;">2. 计算器功能支持哪些运算？</h4>
+      <p>基础计算器支持加、减、乘、除四则运算。在“扩展功能区”的科学计算器中，您可以执行更复杂的数学运算，如三角函数 (sin, cos)、对数 (log) 和指数等。</p>
+      
+      <h4 style="color: var(--color-accent); margin: 12px 0 6px;">3. 工作清单的数据会丢失吗？</h4>
+      <p>不会。您的工作清单数据会保存在浏览器的本地存储 (LocalStorage) 中。只要您不清除浏览器缓存，数据就会一直保留，即使关闭浏览器再重新打开也是如此。</p>
+      
+      <h4 style="color: var(--color-accent); margin: 12px 0 6px;">4. 天气功能为什么显示“暂无天气数据”？</h4>
+      <p>当前版本的天气功能是一个占位符，需要接入第三方天气 API 才能显示真实数据。我们计划在未来的更新中完善此功能。</p>
+      
+      <h4 style="color: var(--color-accent); margin: 12px 0 6px;">5. 如何反馈问题或建议？</h4>
+      <p>由于这是一个静态网页，暂时没有内置的反馈系统。您可以通过您获得此链接的渠道向我们反馈，我们会认真考虑每一条建议。</p>
+    </div>
+  </div>
 
-  <script>
-    const basePages = 9; // 现在有 9 个 section
-    let totalPages = basePages;
-    let currentIndex = 0;
+  <!-- 3. 隐私政策 -->
+  <div class="section-block">
+    <div class="block-title">🔒 隐私政策</div>
+    <div class="block-content">
+      <p>本网站（ly云手机）尊重并保护您的个人隐私。我们承诺不会收集任何可直接识别您个人身份的信息，除非您主动通过联系方式页面与我们沟通。</p>
+      <p>本网站使用本地存储（LocalStorage）来保存您的待办事项和笔记，这些数据仅存在于您的设备浏览器中，不会被上传至任何服务器。</p>
+      <p>网站可能使用第三方统计服务（如访问量分析），但这些服务不会获取您的个人信息。</p>
+      <p>如您对本隐私政策有任何疑问，请通过 <a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a> 与我们联系。</p>
+    </div>
+  </div>
 
-    const sectionsContainer = document.querySelector('.page-container');
-    const navDotsContainer = document.getElementById('navDots');
+  <!-- 4. 关于我 -->
+  <div class="section-block">
+    <div class="block-title">👤 关于我</div>
+    <div class="block-content">
+      <p>欢迎来到 ly云手机 站点。我是本站的创建与维护者，热爱技术、工具分享与效率提升。</p>
+      <p>本网站集合了多种实用小工具，方便日常使用与远程设备管理。我希望通过这个平台，让复杂的操作变得简单，让工具真正服务于人。</p>
+      <p>如果你喜欢这里的内容，欢迎常来看看，也欢迎通过联系方式页面与我交流。</p>
+    </div>
+  </div>
 
-    function initNavDots() {
-      navDotsContainer.innerHTML = '';
-      for (let i = 0; i < totalPages; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot' + (i === currentIndex ? ' active' : '');
-        dot.onclick = () => goToSection(i);
-        navDotsContainer.appendChild(dot);
-      }
-    }
-
-    function goToSection(index) {
-      if (index < 0 || index >= totalPages) return;
-      document.querySelectorAll('.section').forEach((sec, i) => {
-        sec.classList.toggle('active', i === index);
-      });
-      document.querySelectorAll('.dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-      currentIndex = index;
-    }
-
-    let isScrolling = false;
-    window.addEventListener('wheel', e => {
-      if (isScrolling) return;
-      isScrolling = true;
-      if (e.deltaY > 0) goToSection(currentIndex + 1);
-      else goToSection(currentIndex - 1);
-      setTimeout(() => isScrolling = false, 800);
-    });
-
-    let touchStartY = 0;
-    window.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
-    window.addEventListener('touchend', e => {
-      const touchEndY = e.changedTouches[0].clientY;
-      if (touchStartY - touchEndY > 50) goToSection(currentIndex + 1);
-      else if (touchEndY - touchStartY > 50) goToSection(currentIndex - 1);
-    });
-
-    function calc(op) {
-      const n1 = parseFloat(document.getElementById('num1').value);
-      const n2 = parseFloat(document.getElementById('num2').value);
-      let res;
-      if (isNaN(n1) || isNaN(n2)) res = '请输入有效数字';
-      else {
-        switch(op) {
-          case '+': res = n1 + n2; break;
-          case '-': res = n1 - n2; break;
-          case '*': res = n1 * n2; break;
-          case '/': res = n2 !== 0 ? (n1 / n2).toFixed(2) : '除数不能为0'; break;
-        }
-      }
-      document.getElementById('calcResult').textContent = res;
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function updateCountdown() {
-      const target = document.getElementById('targetDate').value;
-      if (!target) {
-        document.getElementById('countdownDisplay').textContent = '0 天';
-        return;
-      }
-      const today = new Date();
-      const end = new Date(target);
-      const diffTime = end - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      document.getElementById('countdownDisplay').textContent = diffDays > 0 ? `${diffDays} 天` : '已到期';
-    }
-    document.getElementById('targetDate').addEventListener('change', updateCountdown);
-
-    let scheduleItems = JSON.parse(localStorage.getItem('scheduleItems')) || [];
-    const scheduleList = document.getElementById('scheduleList');
-
-    function renderSchedule() {
-      scheduleList.innerHTML = '';
-      scheduleItems.slice().reverse().forEach((item, i) => {
-        const realIndex = scheduleItems.length - 1 - i;
-        const timeStr = item.time ? item.time.replace('T', ' ').slice(0, 16) : '';
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <span class="schedule-time">${timeStr}</span>
-          <span class="schedule-text">${item.text}</span>
-          <button class="schedule-delete" onclick="deleteSchedule(${realIndex})">删除</button>
-        `;
-        scheduleList.appendChild(li);
-      });
-    }
-
-    function addScheduleFromInputs() {
-      const container = document.getElementById('scheduleInputs');
-      const timeVal = container.querySelector('.schedule-time-input').value;
-      const textVal = container.querySelector('.schedule-text-input').value.trim();
-      if (!textVal) return;
-      scheduleItems.push({ time: timeVal, text: textVal });
-      localStorage.setItem('scheduleItems', JSON.stringify(scheduleItems));
-      renderSchedule();
-      container.querySelector('.schedule-time-input').value = '';
-      container.querySelector('.schedule-text-input').value = '';
-    }
-
-    function deleteSchedule(index) {
-      scheduleItems.splice(index, 1);
-      localStorage.setItem('scheduleItems', JSON.stringify(scheduleItems));
-      renderSchedule();
-    }
-    renderSchedule();
-
-    function saveNote() {
-      const note = document.getElementById('noteInput').value;
-      localStorage.setItem('note', note);
-      document.getElementById('noteContent').textContent = note || '(空)';
-    }
-    document.getElementById('noteContent').textContent = localStorage.getItem('note') || '(空)';
-
-    function runSciCalc() {
-      const expr = document.getElementById('sciExpr').value;
-      try {
-        const result = eval(expr);
-        document.getElementById('sciResult').textContent = '结果: ' + result;
-
-        document.getElementById('sciResult').textContent = '表达式错误';
-      }
-    }
-
-    async function startPickColor() {
-      if (!window.EyeDropper) {
-        document.getElementById('pickedColor').textContent = '浏览器不支持取色';
-        return;
-      }
-      try {
-        const eyeDropper = new EyeDropper();
-        const result = await eyeDropper.open();
-        document.getElementById('pickedColor').innerHTML = `颜色: ${result.sRGBHex} <div style="width:20px;height:20px;background:${result.sRGBHex};border:1px solid #fff;margin:4px auto;"></div>`;
-      } catch(e) {
-        document.getElementById('pickedColor').textContent = '取消取色';
-      }
-    }
-
-    function showTechToolMenu() {
-      const out = document.getElementById('techToolOutput');
-      out.innerHTML = `
-        <div style="margin-bottom:6px;"><button onclick="runIpQuery()">查询本机IP</button></div>
-        <div style="margin-bottom:6px;"><button onclick="runBase64Encode()">Base64编码</button></div>
-        <div><button onclick="runJsonFormat()">JSON格式化</button></div>
-        <div id="techToolResult" style="margin-top:6px;word-break:break-all;"></div>
-      `;
-    }
-    async function runIpQuery() {
-      const res = await fetch('https://api.ipify.org?format=json');
-      const data = await res.json();
-      document.getElementById('techToolResult').textContent = '本机IP: ' + data.ip;
-    }
-    function runBase64Encode() {
-      const val = prompt('输入要编码的文本:');
-      if (val) {
-        const enc = btoa(unescape(encodeURIComponent(val)));
-        document.getElementById('techToolResult').textContent = 'Base64: ' + enc;
-      }
-    }
-    function runJsonFormat() {
-      const val = prompt('输入JSON字符串:');
-      if (val) {
-        try {
-          const obj = JSON.parse(val);
-          document.getElementById('techToolResult').textContent = '格式化结果:\n' + JSON.stringify(obj, null, 2);
-        } catch(e) {
-          document.getElementById('techToolResult').textContent = 'JSON解析错误';
-        }
-      }
-    }
-
-    let camStream = null;
-    async function startCameraTest() {
-      const video = document.getElementById('camVideo');
-      const info = document.getElementById('camInfo');
-      try {
-        camStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = camStream;
-        video.style.display = 'block';
-        const track = camStream.getVideoTracks()[0];
-        const settings = track.getSettings();
-        info.textContent = `分辨率: ${settings.width}x${settings.height}, 帧率: ${settings.frameRate || '未知'}`;
-      } catch(e) {
-        info.textContent = '无法打开摄像头';
-      }
-    }
-
-    initNavDots();
-  </script>
+  <!-- 5. 联系方式 -->
+  <div class="section-block">
+    <div class="block-title">📬 联系方式</div>
+    <div class="block-content">
+      <p>您可以通过以下方式联系我：</p>
+      <ul style="margin: 10px 0 0 1.2em;">
+        <li>邮箱：<a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a></li>
+      </ul>
+      <p>无论是建议、合作还是问题反馈，我都会尽快回复。</p>
+    </div>
+  </div>
 </body>
+</html>
